@@ -4,7 +4,7 @@ A GTA VI-inspired layout for [Herdr](https://herdr.dev). Your agents become a cr
 of animated pixel characters, your spaces become Leonida districts, and every job
 an agent finishes pays out.
 
-![Vice City](preview.png)
+![Vice City](preview-leonida.png)
 
 - **Crew:** each agent gets a character that animates while it works, with its
   model and context use on the card.

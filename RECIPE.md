@@ -7,7 +7,7 @@ routes you to whoever needs you, six wanted stars light up for agents waiting on
 you, and every job an agent finishes pays money into a ledger. An unofficial fan
 layout, not affiliated with or endorsed by Rockstar Games: it ships no game art.
 
-![Vice City](preview.png)
+![Vice City](preview-leonida.png)
 
 ## What you see
 
