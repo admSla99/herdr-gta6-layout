@@ -5,6 +5,10 @@ tabs, a wanted level for agents that need you, and your agents played by an
 animated pixel-art crew (a bandit, a wheelman, a hacker, Florida Man, a skater
 and a gator). Beach by day, neon by night.
 
+An unofficial fan layout, not affiliated with or endorsed by Rockstar Games.
+It ships no game art: the backgrounds and any character portraits are yours to
+supply (see Watch out).
+
 ![Vice City](preview.png)
 
 ![The crew](crew.png)
@@ -140,10 +144,12 @@ Themes `{ "light": "leonida-beach", "dark": "vice-nights" }`:
   `layouts/` and `mods/`. Without the themes the layout shows the person's
   own theme. Without the backgrounds the root shows no image and
   `vice-brand` stops switching it (it only swaps an image already shown).
-- This machine's build casts agents as portraits (`mods/vice-crew/cast/*.png`,
-  cropped from the person's own GTA VI images by `tools/portraits.py`). They
-  are not in the shareable files. A shared build must swap `crewSprite` in
-  `crew.js` back to the original pixel crew in `sprites/`.
+- The crew is the six pixel characters in `mods/vice-crew/sprites/` unless
+  `mods/vice-crew/cast/cast.json` exists: `{ "<key>": "<Name>" }`, each key with
+  a portrait `cast/<key>.png` (128px). `vice-crew` reads it once at start into
+  shared `vice.crew` (`{ mode, names }`); cards, toasts and the minimap follow.
+  `tools/portraits.py` crops portraits from your own images and writes both.
+  `cast/` is git-ignored: never publish game art.
 - The backgrounds are GTA VI wallpapers the person supplied. They are not in
   the shareable files: bring your own `beach.jpg`, `neon.jpg` and `vi.jpg`.
 - `line_height` takes a string with units (`"30px"`). A bare number is a

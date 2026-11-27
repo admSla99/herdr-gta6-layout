@@ -4,7 +4,7 @@ import { View, div, image, svg } from "gpui-kit";
 import { v_flex, h_flex } from "gpui-base";
 import { agents, terminals, panes, focused, spaces, run, theme, shared, setShared, setAgentOrder, openOverlay, closeOverlay, props, window, layout, hc, checking } from "herdr";
 import { parseModel, parseContext } from "./stats.js";
-import { castFor, crewSprite, moodOf, CREW_NAMES } from "./crew.js";
+import { castFor, crewSprite, moodOf, crewName, loadCast } from "./crew.js";
 import { Economy, cash, money, signed, readLedger, ledgerPath } from "./cash.js";
 
 const LEDGER_ICON = { payout: "badge-cash", getaway: "badge-cash", bail: "badge-siren-red", busted: "badge-siren-blue" };
@@ -110,6 +110,7 @@ export default class Agents extends View {
     cx.timer.every(STATS_PERIOD, (cx) => this.readStats(cx));
     this.readStats(cx);
     this.economy = new Economy();
+    cx.spawn(async () => { await loadCast(); });
   }
 
   readStats(cx) {
@@ -334,7 +335,7 @@ export default class Agents extends View {
     const cast = castFor(list, all);
     const byAddress = new Map(list.map((a) => [a.address, a]));
     this.economy?.step(list, all, now, (address) => ({
-      member: CREW_NAMES[cast[address]] ?? null,
+      member: crewName(cast[address]),
       model: this.stats?.[address]?.model?.name ?? null,
       space: byAddress.get(address)?.space_name ?? null,
     }));
@@ -426,7 +427,7 @@ export default class Agents extends View {
           .justify_center()
           .when(a.focused, (el) => el.bg(t.selected))
           .hover((s) => s.bg(t.hover))
-          .when(Boolean(member), (el) => el.tooltip(`${CREW_NAMES[member]}: ${moodOf(a.status, 0)}${this.stats?.[a.address]?.model ? `, ${this.stats[a.address].model.name}` : ""}`))
+          .when(Boolean(member), (el) => el.tooltip(`${crewName(member)}: ${moodOf(a.status, 0)}${this.stats?.[a.address]?.model ? `, ${this.stats[a.address].model.name}` : ""}`))
           .on_click(() => run("pane.focus", { pane: a.pane }))
           .child(member ? crewSprite(member, a.status, RAIL_SPRITE_SIZE, t) : this.status(t, a, true));
       }
@@ -487,7 +488,7 @@ export default class Agents extends View {
           })).child(face)))
         .child(v_flex().flex_1().min_w(0).gap(1)
           .when(Boolean(member), el => el.child(h_flex().min_w(0).gap(7).items_baseline()
-            .child(div().flex_none().font_family(DISPLAY).text_size(15).text_color(t.foreground).child(CREW_NAMES[member]))
+            .child(div().flex_none().font_family(DISPLAY).text_size(15).text_color(t.foreground).child(crewName(member) ?? ""))
             .child(div().min_w(0).truncate().text_size(11).text_color(t[a.status] ?? t.dim).child(moodOf(a.status, when ? now - when : 0)))
             .when(Boolean(todayBy[a.address]), el => el.child(div().flex_none().text_size(11).font_semibold()
               .text_color(todayBy[a.address] < 0 ? t.blocked : "#4fd66a").child(`${signed(todayBy[a.address])} today`)))))

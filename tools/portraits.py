@@ -11,6 +11,9 @@ OUT = os.path.expanduser(r"~/.config/herdr-app/mods/vice-crew/cast")
 SHEET = sys.argv[1] if len(sys.argv) > 1 else "cast.png"
 JL = "Jason_and_Lucia_Robbery.jpg"; SIDE = "favorite-gta-vi-side-character-so-far-v0-2w1mfg2psm0f1.webp"; MANDY = "mandy.jpg"
 # key: (file, (left, top, size)) in source pixels
+# The names cards, toasts and the minimap show, by portrait key. Edit to taste.
+NAMES = {"lucia": "Lucia", "jason": "Jason", "cal": "Cal Hampton", "boobie": "Boobie Ike", "drequan": "Dre'Quan Priest",
+         "dimez": "Real Dimez", "raul": "Raul Bautista", "brian": "Brian Heder", "mandy": "Mandy"}
 CAST = {
     "lucia": (JL, (2580, 230, 520)),
     "jason": (JL, (3230, 40, 560)),
@@ -31,4 +34,8 @@ sheet = Image.new("RGB", (len(tiles) * 136 + 8, 144), (42, 30, 79))
 for i, t in enumerate(tiles):
     sheet.paste(t, (8 + i * 136, 8))
 sheet.save(SHEET)
+# The crew list vice-crew reads: with it, these portraits replace the pixel crew.
+import json
+with open(os.path.join(OUT, "cast.json"), "w", encoding="utf-8") as fh:
+    json.dump(NAMES, fh, indent=2)
 print(list(CAST))

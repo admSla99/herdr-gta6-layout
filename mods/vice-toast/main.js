@@ -7,7 +7,9 @@ import { v_flex, h_flex } from "gpui-base";
 import { props, closeOverlay, run, theme, shared } from "herdr";
 
 const DISPLAY = "Anton";
-const NAMES = { lucia: "Lucia", jason: "Jason", cal: "Cal Hampton", boobie: "Boobie Ike", drequan: "Dre'Quan Priest", dimez: "Real Dimez", raul: "Raul Bautista", brian: "Brian Heder", mandy: "Mandy" };
+const PIXEL_NAMES = { bandit: "The Bandit", driver: "The Wheelman", hacker: "The Hacker", tourist: "Florida Man", skater: "The Skater", gator: "The Gator" };
+const crew = () => { const c = shared("vice.crew"); return c?.mode === "portraits" && c.names ? c : { mode: "pixel", names: PIXEL_NAMES }; };
+const picture = (member) => crew().mode === "portraits" ? `mods/vice-crew/cast/${member}.png` : `mods/vice-crew/sprites/${member}-idle.svg`;
 const sprite = (name) => `mods/vice-crew/sprites/${name}.svg`;
 const RECT = () => PathBuilder.fill().move_to("0%", "0%").line_to("100%", "0%").line_to("100%", "100%").line_to("0%", "100%").close().build();
 const paint = (from, to, angle) =>
@@ -20,7 +22,7 @@ function crewOf(p) {
   if (!m) return null;
   const terminal = p.action?.name === "agent.focus" ? p.action.args?.terminal : null;
   const member = terminal ? shared("vice.cast")?.[terminal] : null;
-  return { program: m[1], done: m[2] === "finished", member: NAMES[member] ? member : null, terminal };
+  return { program: m[1], done: m[2] === "finished", member: crew().names[member] ? member : null, terminal };
 }
 
 const DOT = { error: "blocked", warning: "working", success: "done", info: "accent" };
@@ -71,7 +73,7 @@ export default class Toast extends View {
     // The payout vice-crew booked for this agent's job, if it just did.
     const last = shared("vice.cash")?.last;
     const paid = done && last && last.agent === terminal && last.amount > 0 && Date.now() - last.at < 20000 ? last : null;
-    const who = member ? NAMES[member] : program;
+    const who = member ? crew().names[member] : program;
     const badge = done
       ? image(sprite("badge-cash")).size(20)
       : div().relative().size(20)
@@ -87,7 +89,7 @@ export default class Toast extends View {
       .child(div().relative().w(6).h_full().flex_none().child(done ? paint("#ff4f9a", "#ff9447", 180) : paint("#ff3b4f", "#3b7bff", 180)))
       .child(h_flex().flex_1().min_w(0).h_full().pl(12).pr(16).gap(12).items_center()
         .child(div().relative().size(44).flex_none()
-          .child(member ? image(`mods/vice-crew/cast/${member}.png`).size(44).rounded(4) : div().size(44).rounded(4).bg(done ? t.done : t.blocked))
+          .child(member ? image(picture(member)).size(44).rounded(4) : div().size(44).rounded(4).bg(done ? t.done : t.blocked))
           .child(div().absolute().top(-4).left(-4).child(badge)))
         .child(v_flex().flex_1().min_w(0)
           .child(h_flex().gap(8).items_baseline()

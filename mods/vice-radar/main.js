@@ -13,7 +13,8 @@ const H = 150;
 const BLIP = 12;
 const ME = { x: W / 2, y: H - 22 };
 const ROUTE = "#ff5fa8";
-const NAMES = { lucia: "Lucia", jason: "Jason", cal: "Cal Hampton", boobie: "Boobie Ike", drequan: "Dre'Quan Priest", dimez: "Real Dimez", raul: "Raul Bautista", brian: "Brian Heder", mandy: "Mandy" };
+const PIXEL_NAMES = { bandit: "The Bandit", driver: "The Wheelman", hacker: "The Hacker", tourist: "Florida Man", skater: "The Skater", gator: "The Gator" };
+const names = () => { const c = shared("vice.crew"); return c?.mode === "portraits" && c.names ? c.names : PIXEL_NAMES; };
 const WORD = { working: "on a job", idle: "laying low", done: "got paid", blocked: "wanted" };
 const RANK = { blocked: 3, done: 2, working: 1 };
 
@@ -59,7 +60,7 @@ export default class Radar extends View {
 
   blip(t, a, cast, target) {
     const { x, y } = spot(a);
-    const who = NAMES[cast[a.address]] ?? a.program?.name ?? a.address;
+    const who = names()[cast[a.address]] ?? a.program?.name ?? a.address;
     const el = div().id(`blip-${a.address}`).absolute().left(x - BLIP / 2).top(y - BLIP / 2).size(BLIP).cursor_pointer()
       .tooltip(`${who}: ${WORD[a.status] ?? a.status} in ${a.space_name}`)
       .on_click(() => run("pane.focus", { pane: a.pane }));
@@ -98,7 +99,7 @@ export default class Radar extends View {
     const ink = day ? "#111114" : "#f4f4f6";
     const chip = day ? "#ffffffd9" : "#111114cc";
     const label = target
-      ? `${NAMES[cast[target.address]] ?? target.program?.name ?? "Agent"} · ${WORD[target.status]}`
+      ? `${names()[cast[target.address]] ?? target.program?.name ?? "Agent"} · ${WORD[target.status]}`
       : `${list.length} crew · all clear`;
     const targetSpot = target ? spot(target) : null;
     return v_flex().size_full().items_center().justify_center().bg(t.chrome).border_t(1).border_color(t.border)
