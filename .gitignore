@@ -1,12 +1,5 @@
-# Rockstar art the person supplied: personal use only, never publish.
-gta6-wallpaper.png
-gta6-wallpaper2.png
-gta-6-character-art-*.png
 backgrounds/
 __pycache__/
-# Portraits cropped from the person's own GTA VI images: personal use only.
-mods/vice-crew/cast/
-cast.png
 # Not part of the layout.
 mods/vice-crew/crew32/
 tools/img2pixel.py
