@@ -1,0 +1,6 @@
+{
+  "sounds": {
+    "done": "mods/vice-crew/sounds/job-done.mp3",
+    "blocked": "mods/vice-crew/sounds/wanted.mp3"
+  }
+}

@@ -1,0 +1,205 @@
+{
+  "id": "root",
+  "type": "row",
+  "children": [
+    {
+      "id": "sidebar",
+      "type": "column",
+      "children": [
+        {
+          "id": "brand",
+          "type": "block",
+          "content": {
+            "mod": "vice-brand"
+          },
+          "size": {
+            "px": 58
+          },
+          "window_drag": true
+        },
+        {
+          "id": "sidebar-lists",
+          "type": "column",
+          "children": [
+            {
+              "id": "spaces",
+              "type": "block",
+              "content": {
+                "mod": "vice-spaces"
+              },
+              "size": {
+                "weight": 2
+              },
+              "min": 90
+            },
+            {
+              "id": "agents",
+              "type": "block",
+              "content": {
+                "mod": "vice-crew"
+              },
+              "size": {
+                "weight": 3
+              },
+              "min": 120
+            }
+          ]
+        },
+        {
+          "id": "radar",
+          "type": "block",
+          "size": {
+            "px": 172
+          },
+          "content": {
+            "mod": "vice-radar"
+          }
+        },
+        {
+          "id": "sidebar-footer",
+          "type": "block",
+          "content": {
+            "mod": "workspace-chrome",
+            "props": {
+              "footer": true
+            }
+          },
+          "size": {
+            "px": 69
+          }
+        }
+      ],
+      "size": {
+        "px": 272
+      },
+      "min": 44,
+      "max": 480,
+      "background": "chrome",
+      "resizable": false
+    },
+    {
+      "id": "work",
+      "type": "column",
+      "children": [
+        {
+          "id": "tabs",
+          "type": "block",
+          "content": {
+            "mod": "vice-tabs"
+          },
+          "size": {
+            "px": 44
+          },
+          "window_drag": true
+        },
+        {
+          "id": "work-body",
+          "type": "row",
+          "children": [
+            {
+              "id": "main",
+              "type": "block",
+              "content": {
+                "tab": "active",
+                "pane": {
+                  "header": {
+                    "content": {
+                      "mod": "vice-pane"
+                    },
+                    "reveal": "always",
+                    "height": 30,
+                    "position": "top"
+                  },
+                  "background": "#00000000",
+                  "border": {
+                    "width": 1,
+                    "color": "border"
+                  },
+                  "focus": {
+                    "width": 2,
+                    "color": "accent"
+                  },
+                  "veil": 0.25,
+                  "radius": 4,
+                  "gap": 10,
+                  "lone": true
+                }
+              }
+            },
+            {
+              "id": "panel",
+              "type": "column",
+              "children": [
+                {
+                  "id": "panel-body",
+                  "type": "stack",
+                  "children": [
+                    {
+                      "id": "files",
+                      "type": "block",
+                      "content": {
+                        "mod": "files"
+                      }
+                    },
+                    {
+                      "id": "changes",
+                      "type": "block",
+                      "content": {
+                        "mod": "changes"
+                      }
+                    }
+                  ],
+                  "active": "files"
+                }
+              ],
+              "size": {
+                "px": 368
+              },
+              "min": 280,
+              "max": 900,
+              "hidden": true
+            }
+          ],
+          "padding": 10,
+          "gap": 10
+        },
+        {
+          "id": "status",
+          "type": "block",
+          "content": {
+            "mod": "vice-status"
+          },
+          "size": {
+            "px": 28
+          }
+        }
+      ],
+      "resizable": false
+    }
+  ],
+  "background": {
+    "image": "backgrounds/vice/beach.jpg",
+    "fit": "cover"
+  },
+  "theme": {
+    "light": "leonida-beach",
+    "dark": "vice-nights"
+  },
+  "ui_font": "Geist",
+  "terminal_padding": [
+    14,
+    12
+  ],
+  "terminal_opacity": 0.800000011920929,
+  "divider": {
+    "width": 1,
+    "color": "border"
+  },
+  "titlebar": "none",
+  "traffic_lights": [
+    12,
+    16
+  ],
+  "preview": "layouts/vice-city.png",
+  "toast": "vice-toast"
+}
